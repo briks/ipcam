@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BriKs Arduino IOT IP cam</title>
+
+<script type="text/javascript">
+strLED1 = "";
+strLED2 = "";
+strLED3 = "";
+strLED4 = "";
+var LED1_state = 0;
+var LED2_state = 0;
+var LED3_state = 0;
+var LED4_state = 0;
+		function GetArduinoIO()
+		{
+			nocache = "&nocache=" + Math.random() * 1000000;
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function()
+			{
+				if (this.readyState == 4) {
+					if (this.status == 200) {
+						if (this.responseXML != null) {
+							// XML file received - contains analog values, switch values and LED states
+							var count;
+							// get analog inputs
+							var num_an = this.responseXML.getElementsByTagName('analog').length;
+							for (count = 0; count < num_an; count++) {
+								document.getElementsByClassName("analog")[count].innerHTML =
+									this.responseXML.getElementsByTagName('analog')[count].childNodes[0].nodeValue;
+							}
+							// LED 1
+							if (this.responseXML.getElementsByTagName('LED')[0].childNodes[0].nodeValue === "on") {
+								document.getElementById("LED1").innerHTML = "GPO1 is ON (D8)";
+								LED1_state = 1;
+							}
+							else {
+								document.getElementById("LED1").innerHTML = "GPO1 is OFF (D8)";
+								LED1_state = 0;
+							}
+							// LED 2
+							if (this.responseXML.getElementsByTagName('LED')[1].childNodes[0].nodeValue === "on") {
+								document.getElementById("LED2").innerHTML = "GPO2 is ON (D8)";
+								LED2_state = 1;
+							}
+							else {
+								document.getElementById("LED2").innerHTML = "GPO2 is OFF (D8)";
+								LED2_state = 0;
+							}
+							// LED 3
+							if (this.responseXML.getElementsByTagName('LED')[2].childNodes[0].nodeValue === "on") {
+								document.getElementById("LED3").innerHTML = "GPO3 is ON (D8)";
+								LED3_state = 1;
+							}
+							else {
+								document.getElementById("LED3").innerHTML = "GPO3 is OFF (D8)";
+								LED3_state = 0;
+							}
+							// LED 4
+							if (this.responseXML.getElementsByTagName('LED')[3].childNodes[0].nodeValue === "on") {
+								document.getElementById("LED4").innerHTML = "GPO4 is ON (D9)";
+								LED4_state = 1;
+							}
+							else {
+								document.getElementById("LED4").innerHTML = "GPO4 is OFF (D9)";
+								LED4_state = 0;
+							}
+						}
+					}
+				}
+			}
+			// send HTTP GET request with LEDs to switch on/off if any
+			request.open("GET", "ajax_inputs" + strLED1 + strLED2 + strLED3 + strLED4 + nocache, true);
+			request.send(null);
+			setTimeout('GetArduinoIO()', 1000);
+			strLED1 = "";
+			strLED2 = "";
+			strLED3 = "";
+			strLED4 = "";
+		}
+		function GetButton1()
+		{
+			if (LED1_state === 1) {
+				LED1_state = 0;
+				strLED1 = "&LED1=0";
+			}
+			else {
+				LED1_state = 1;
+				strLED1 = "&LED1=1";
+			}
+		}
+		function GetButton2()
+		{
+			if (LED2_state === 1) {
+				LED2_state = 0;
+				strLED2 = "&LED2=0";
+			}
+			else {
+				LED2_state = 1;
+				strLED2 = "&LED2=1";
+			}
+		}
+		function GetButton3()
+		{
+			if (LED3_state === 1) {
+				LED3_state = 0;
+				strLED3 = "&LED3=0";
+			}
+			else {
+				LED3_state = 1;
+				strLED3 = "&LED3=1";
+			}
+		}
+		function GetButton4()
+		{
+			if (LED4_state === 1) {
+				LED4_state = 0;
+				strLED4 = "&LED4=0";
+			}
+			else {
+				LED4_state = 1;
+				strLED4 = "&LED4=1";
+			}
+		}
+		function showImg()
+		{
+		window.location.reload();
+		}
+</script>
+<style>
+img{width:640px;height:480px;border:5;border: 5px solid black;}
+.show{display:block;}
+.hide{display:none;}
+.IO_box {
+			
+			float: left;
+			margin: 0 20px 20px 0;
+			border: 2px solid blue;
+			padding: 0 5px 0 5px;
+			width: 640px;
+		}
+h1 {
+			font-size: 200%;
+			color: blue;
+			margin: 0 0 10px 0;
+			border: 5px solid red;
+			width: 640px;
+	}
+h2 {
+			font-size: 85%;
+			color: #5734E6;
+			margin: 5px 0 5px 0;
+	}
+p, form, button {
+			font-size: 80%;
+			color: #252525;
+		}
+.small_text {
+			font-size: 70%;
+			color: #737373;
+		}
+</style>
+</head>
+
+<body onload="GetArduinoIO()">
+<h1><center>__BriKs__ IP CAM with Arduino</center></h1>
+<img id="image01" src="pic.jpg" class="show">
+<br/>
+
+<div class="IO_box">
+			<h2>CAM & Arduino control</h2>
+			<span style="display: inline;">
+			<button type="button" onclick = "showImg()">Cam shoot!!</button>
+			<button type="button" id="LED1" onclick="GetButton1()">GPO1 is OFF (D6)</button>
+			<button type="button" id="LED2" onclick="GetButton2()">GPO2 is OFF (D7)</button>
+			<button type="button" id="LED3" onclick="GetButton3()">GPO3 is OFF (D8)</button>
+			<button type="button" id="LED4" onclick="GetButton4()">GPO4 is OFF (D9)</button>
+			</span>
+			<p class="small_text">General Purpose Output of Atmega 328</p>
+			<h2>Analog Inputs</h2>
+			<p class="small_text">Analog in of Atmega 328</p>
+			<p class="small_text">10 bit adc</p>
+			
+			<p>A2: <span class="analog">...</span></p>
+			<p>A3: <span class="analog">...</span></p>
+			
+		</div>
+</body>
+</html> 
