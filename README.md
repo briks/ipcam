@@ -17,12 +17,12 @@ The camera is made of three parts:
 
 Setup:
 
-* simply connect together the Arduino and the Ethernet shield
-* connect power to Adafruit camera (+5VDC and GND, can be directly sourced by Arduino
-* connect serial link from camera to arduino, RX from cam to digital 2 of Arduino, TX from cam to digital 3 of Arduino, this is a good idea to insert a resistor divider between digital pin 2 of arduino and RX pin of cam
-* insert a µSD into ethernet shield with a FAT16/32 volume and the file index.htm
-* modify the sketch with your no-ip account and encrypted password (see inside sketch), modify the sketch with yout ISP setting
-* upload sketch into Arduino and start play!
+1.  simply connect together the Arduino and the Ethernet shield
+2.  connect power to Adafruit camera (+5VDC and GND, can be directly sourced by Arduino
+3.  connect serial link from camera to arduino, RX from cam to digital 2 of Arduino, TX from cam to digital 3 of Arduino, this is a good idea to insert a resistor divider between digital pin 2 of arduino and RX pin of cam
+4.  insert a µSD into ethernet shield with a FAT16/32 volume and the file index.htm
+5.  modify the sketch with your no-ip account and encrypted password (see inside sketch), modify the sketch with yout ISP setting
+6.  upload sketch into Arduino and start play!
 
 Note about the sketch:
 the major issue is the RAM stack and heap usage, I've to use F() function to save precious bytes in order the sketch works
@@ -34,6 +34,6 @@ I've some ideas to improve it like:
 remove the µSD utilisation to save RAM bytes for using an tiny OS like arduos or NIL RTOS, this enable low power optimisations possibilities
 add basic security to the web page access
 
-Have fun with this toys!
+Have fun with this toy!
 
 __BriKs__
