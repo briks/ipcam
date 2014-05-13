@@ -15,8 +15,6 @@ The camera is made of three parts:
 * an serail JPG camera from Adafruit
 * an ethernet shield
 
-![alt text](http://tof.canardpc.com/view/f2202f10-cc62-471e-ac7c-6d7d01a113ec.jpg][img]http://tof.canardpc.com/preview2/f2202f10-cc62-471e-ac7c-6d7d01a113ec.jpg)
-
 Setup:
 
 1.  simply connect together the Arduino and the Ethernet shield
