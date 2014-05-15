@@ -9,6 +9,8 @@ The purpose of this project is to build a camera which is able to take picture u
 One time the hw and sw setup is done, you can access your camera via an URL and take shoot, control 4 outputs of Arduino and read 2 analog values.
 The picture is directly uploaded from Arduino to your web browser.
 
+[![Alt text for your video](http://img.youtube.com/vi/bfjF8BlNbe8/0.jpg)](https://www.youtube.com/watch?v=bfjF8BlNbe8)
+
 So how to do the hardware conf ?
 The camera is made of three parts:
 * an Arduino UNO rev3
